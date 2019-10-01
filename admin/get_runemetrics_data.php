@@ -1,6 +1,6 @@
 <?php
 
-$testing = true;
+$testing = false;
 
 function fix_int_overflow($int) {
 	if ($int < 0) {
