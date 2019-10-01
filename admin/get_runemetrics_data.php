@@ -66,7 +66,7 @@ if ($getMembersResult->num_rows > 0) {
 		$abortUser = false;
 		$memberId = $member['id'];
 		$username = $member['username'];
-		$processingUserQuery = "UPDATE users SET setup_state = 7 WHERE id = $memberId;";
+		$processingUserQuery = "UPDATE users SET setup_state = 7, setup_state_change = NOW() WHERE id = $memberId;";
 		$processingUserResult = $mysqli->query($processingUserQuery);
 		if (!$processingUserResult) {
 			print_p("ERROR: ".mysqli_error($mysqli).". From sql query - \"$processingUserQuery\"", true);
@@ -79,7 +79,7 @@ if ($getMembersResult->num_rows > 0) {
 			$jsonDataString = @file_get_contents($url);
 			if ($jsonDataString === FALSE) {
 				$testing ? print_p("$username not found.") : "";
-				$invalidUsernameQuery = "UPDATE users SET setup_state = 3 WHERE id = $memberId;";
+				$invalidUsernameQuery = "UPDATE users SET setup_state = 3, setup_state_change = NOW() WHERE id = $memberId;";
 				$invalidUsernameResult = $mysqli->query($invalidUsernameQuery);
 				if (!$invalidUsernameResult) {
 					print_p("ERROR: ".mysqli_error($mysqli).". From sql query - \"$invalidUsernameQuery\"", true);
@@ -92,7 +92,7 @@ if ($getMembersResult->num_rows > 0) {
 				$data = json_decode($jsonDataString, true);
 				if (!isset($data["monthlyXpGain"][0]["skillId"])) {
 					$testing ? print_p("$skillId not found.") : "";
-					$invalidSkillIdQuery = "UPDATE users SET setup_state = 4 WHERE id = $memberId;";
+					$invalidSkillIdQuery = "UPDATE users SET setup_state = 4, setup_state_change = NOW() WHERE id = $memberId;";
 					$invalidSkillIdResult = $mysqli->query($invalidSkillIdQuery);
 					if (!$invalidSkillIdResult) {
 						print_p("Error: ".mysqli_error($mysqli).". From sql query - \"$invalidSkillIdQuery\"", true);
@@ -174,7 +174,7 @@ if ($getMembersResult->num_rows > 0) {
 				$xpTotalInsertStatus = 5;
 			}
 		}
-		$xpTotalsInsertsResultQuery = "UPDATE users SET setup_state = $xpTotalInsertStatus WHERE id = $memberId;";
+		$xpTotalsInsertsResultQuery = "UPDATE users SET setup_state = $xpTotalInsertStatus, setup_state_change = NOW() WHERE id = $memberId;";
 		$xpTotalsInsertsResultResult = $mysqli->query($xpTotalsInsertsResultQuery);
 		if (!$xpTotalsInsertsResultResult) {
 			print_p("Error: ".mysqli_error($mysqli).". From sql query - \"$xpTotalsInsertsResultQuery\"", true);
