@@ -1,6 +1,6 @@
 <?php
 
-$testing = true;
+$testing = false;
 
 include_once("header.php");
 

@@ -11,10 +11,9 @@ function fix_int_overflow($int) {
 
 include_once("header.php");
 
-//$usersPerRun = $argv[1];
-$usersPerRun = 1;
+$usersPerRun = $argv[1];
 
-$getMembersQuery = "SELECT id, username FROM users WHERE setup_state = 1 AND id = 8 LIMIT $usersPerRun;";
+$getMembersQuery = "SELECT id, username FROM users WHERE setup_state = 1 LIMIT $usersPerRun;";
 $getMembersResult = $mysqli->query($getMembersQuery);
 
 $getSkillsQuery = "SELECT `id` FROM `skills`";
