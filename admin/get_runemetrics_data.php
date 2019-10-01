@@ -77,7 +77,8 @@ if ($getMembersResult->num_rows > 0) {
 			$runemetricsUsername = str_replace(" ", "_", $username);
 			$url = "https://apps.runescape.com/runemetrics/xp-monthly?searchName=$runemetricsUsername&skillid=$runemetricsSkillId";
 			$jsonDataString = @file_get_contents($url);
-			if ($jsonDataString === FALSE) {
+			$data = json_decode($jsonDataString, true);
+			if ($data == FALSE) {
 				$testing ? print_p("$username not found.") : "";
 				$invalidUsernameQuery = "UPDATE users SET setup_state = 3, setup_state_change = NOW() WHERE id = $memberId;";
 				$invalidUsernameResult = $mysqli->query($invalidUsernameQuery);
@@ -89,7 +90,6 @@ if ($getMembersResult->num_rows > 0) {
 			}
 			else {
 				$testing ? print_p("$username found.") : "";
-				$data = json_decode($jsonDataString, true);
 				if (!isset($data["monthlyXpGain"][0]["skillId"])) {
 					$testing ? print_p("$skillId not found.") : "";
 					$invalidSkillIdQuery = "UPDATE users SET setup_state = 4, setup_state_change = NOW() WHERE id = $memberId;";
