@@ -4,16 +4,10 @@ $testing = true;
 
 include_once("header.php");
 
-$resetTimedoutUsersQuery = "UPDATE users set setup_state = 1 WHERE setup_state = 7;";
-$resetTimedoutUsersResult = $mysqli->query($resetTimedoutUsersQuery);
-if (!$resetTimedoutUsersResult) {
-  print_p("ERROR: ".mysqli_error($mysqli).". From sql query - \"$getUsersInProcessQuery\"", true);
-}
-
-$getUsersInProcessQuery = "SELECT id FROM users WHERE setup_state = 7;";
-$getUsersInProcessResult = $mysqli->query($getUsersInProcessQuery);
-if (!$getUsersInProcessResult) {
-  print_p("ERROR: ".mysqli_error($mysqli).". From sql query - \"$getUsersInProcessQuery\"", true);
+$updateTimedoutUsersQuery = "UPDATE users set setup_state = 1, setup_state_change = NOW() WHERE setup_state = 7 AND TIMESTAMPDIFF(MINUTE, setup_state_change, NOW()) > 5;";
+$updateTimedoutUsersResult = $mysqli->query($updateTimedoutUsersQuery);
+if (!$updateTimedoutUsersResult) {
+  print_p("ERROR: ".mysqli_error($mysqli).". From sql query - \"$updateTimedoutUsersQuery\"", true);
 }
 
  ?>
