@@ -1,5 +1,7 @@
 <?php
 
+include_once('db.php');
+
 class databaseConnection
 {
 	function connect($cli = false, $testing = false)
@@ -12,13 +14,8 @@ class databaseConnection
 		{
 			$nl = "<br>";
 		}
-
-		$hostname = "localhost";
-		$database = "runescape_tracker";
-		$username = "rs_webmaster";
-		$password = "%Nc47sp8";
-
-		$mysqli = new mysqli($hostname, $username, $password, $database);
+		
+		$mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 		$cacheOffQuery = "SET SESSION query_cache_type = OFF;";
 		$mysqli->query($cacheOffQuery);
 

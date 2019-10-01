@@ -1,8 +1,8 @@
 <?php
 
-$testing = false;
+$testing = true;
 
-include_once("header.php");
+include_once("admin/header.php");
 
 echo "Hello, world!";
 
