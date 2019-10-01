@@ -65,6 +65,11 @@ if ($getMembersResult->num_rows > 0) {
 	while ($member = $getMembersResult->fetch_assoc()) {
 		$memberId = $member['id'];
 		$username = $member['username'];
+		$processingUserQuery = "UPDATE users SET setup_state = 7 WHERE id = $memberId;";
+		$processingUserResult = $mysqli->query($processingUserQuery);
+		if (!$processingUserResult) {
+			print_p("ERROR: ".mysqli_error($mysqli).". From sql query - \"$processingUserQuery\"", true);
+		}
 		$monthlyXp = [];
 		foreach ($skillIds as $skillId) {
 			$runemetricsSkillId = $skillId-2;
