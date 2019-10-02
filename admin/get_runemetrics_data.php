@@ -42,7 +42,9 @@ function get_levels($skillXp, $skillId) {
 
 include_once("header.php");
 
-$getMembersQuery = "SELECT id, username FROM users WHERE setup_state = 7;";
+$usersPerRun = $argv[1];
+
+$getMembersQuery = "SELECT id, username FROM users WHERE setup_state = 1 LIMIT $usersPerRun;";
 $getMembersResult = $mysqli->query($getMembersQuery);
 
 $getSkillsQuery = "SELECT `id` FROM `skills`";
@@ -64,7 +66,7 @@ if ($getMembersResult->num_rows > 0) {
 		$abortUser = false;
 		$memberId = $member['id'];
 		$username = $member['username'];
-		$processingUserQuery = "UPDATE users SET setup_state = 6, setup_state_change = NOW() WHERE id = $memberId;";
+		$processingUserQuery = "UPDATE users SET setup_state = 7, setup_state_change = NOW() WHERE id = $memberId;";
 		$processingUserResult = $mysqli->query($processingUserQuery);
 		if (!$processingUserResult) {
 			print_p("ERROR: ".mysqli_error($mysqli).". From sql query - \"$processingUserQuery\"", true);
