@@ -29,8 +29,8 @@ function get_levels($skillXp, $skillId) {
 			break;
 		}
 	}
-	if (in_array($skillId, $eliteSkills)) {
-		$level = min(150, $rawLevel);
+	if (in_array($skillId, $advancedSkills)) {
+		$level = min(120, $rawLevel);
 	}
 	else {
 		$level = min(99, $rawLevel);
